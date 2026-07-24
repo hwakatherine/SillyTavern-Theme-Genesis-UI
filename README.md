@@ -3,6 +3,10 @@
 Genesis UI is a lightweight glassmorphism RPG interface extension for SillyTavern.
 <img width="1867" height="931" alt="image" src="https://github.com/user-attachments/assets/4567daa1-84ab-43c4-96c7-aee75975db3b" />
 
+<img width="477" height="507" alt="image" src="https://github.com/user-attachments/assets/c3fefeb0-96dc-4491-bbee-d9f822d25d90" />
+
+<img width="976" height="615" alt="image" src="https://github.com/user-attachments/assets/dd048592-7512-4de0-a5f9-4f8027937aa3" />
+
 
 ## Installation
 
@@ -29,14 +33,3 @@ Genesis UI is a lightweight glassmorphism RPG interface extension for SillyTaver
 
 This is still a test build. If SillyTavern or another theme overrides message layout with very strong CSS, disable the other theme first and test Genesis UI on the standard ST theme.
 
-
-## v0.1.3
-
-- System/no-API/ST Assistant utility messages no longer get giant RPG avatars.
-- Older Genesis UI `is_user` markers are removed from system utility messages during refresh.
-
-## v0.1.4
-
-- Removed True glass blur toggle.
-- Removed Glass blur amount and Glass saturation sliders.
-- Kept the lightweight glass look through opacity, border, radius, shadow, text readability boost, and message colors.
