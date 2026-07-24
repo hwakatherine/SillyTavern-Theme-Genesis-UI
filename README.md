@@ -19,16 +19,6 @@ Genesis UI is a lightweight glassmorphism RPG interface extension for SillyTaver
 4. Open Extensions settings.
 5. Find **Genesis UI** and adjust the sliders/colors.
 
-## v0.1.4 changes
-
-- Replaced the grid/avatar-column layout with VoidDrift-style floating avatars.
-- Removed banner logic entirely.
-- Removed the heavy True glass blur mode entirely because it was not worth the lag.
-- Removed Glass blur amount and Glass saturation controls because the visible effect was negligible in the current layout.
-- Reworked the message observer to avoid attribute feedback loops and freezing.
-- Default large avatar width is now 304px. You can set it back to 350px in the settings.
-- Bot avatars float right on desktop; user avatars float left.
-- Mobile safe mode uses smaller left-floating avatars.
 
 ## Notes
 
