@@ -7,6 +7,7 @@ Genesis UI is a lightweight glassmorphism RPG interface extension for SillyTaver
 
 <img width="976" height="615" alt="image" src="https://github.com/user-attachments/assets/dd048592-7512-4de0-a5f9-4f8027937aa3" />
 
+<img width="478" height="587" alt="image" src="https://github.com/user-attachments/assets/a99fc18f-1857-4848-9548-eda0f0161236" />
 
 ## Installation
 
