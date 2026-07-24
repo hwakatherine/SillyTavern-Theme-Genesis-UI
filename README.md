@@ -1,8 +1,8 @@
 # Genesis UI for SillyTavern
 
 Genesis UI is a lightweight glassmorphism RPG interface extension for SillyTavern.
+<img width="1867" height="931" alt="image" src="https://github.com/user-attachments/assets/4567daa1-84ab-43c4-96c7-aee75975db3b" />
 
-It adds VoidDrift-style floating chat avatars, translucent glass message cards, customizable user/bot message colors, neon borders, and a mobile-safe mode.
 
 ## Installation
 
