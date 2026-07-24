@@ -1,0 +1,360 @@
+/* Genesis UI v0.1.4 */
+
+:root {
+  --genesis-ui-avatar-size-desktop: 304px;
+  --genesis-ui-avatar-size-mobile: 150px;
+  --genesis-ui-avatar-radius: 0px;
+  --genesis-ui-avatar-gap: 18px;
+  --genesis-ui-avatar-top-pull: 0px;
+  --genesis-ui-text-top-padding: 0px;
+
+  --genesis-ui-glass-opacity: 0.20;
+  --genesis-ui-border-opacity: 0;
+  --genesis-ui-message-radius: 22px;
+  --genesis-ui-shadow-strength: 0.30;
+  --genesis-ui-text-panel-opacity-boost: 0.08;
+
+  --genesis-ui-user-bg-rgb: 40, 120, 255;
+  --genesis-ui-user-bg-opacity: 0.20;
+  --genesis-ui-user-glow-rgb: 90, 180, 255;
+  --genesis-ui-user-glow-strength: 0.45;
+
+  --genesis-ui-bot-bg-rgb: 255, 120, 40;
+  --genesis-ui-bot-bg-opacity: 0.18;
+  --genesis-ui-bot-glow-rgb: 255, 170, 70;
+  --genesis-ui-bot-glow-strength: 0.45;
+}
+
+/* Settings panel */
+#genesis-ui-settings-panel {
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--SmartThemeBodyColor, #fff) 18%, transparent);
+  border-radius: 12px;
+  background: rgba(18, 18, 28, 0.42);
+  backdrop-filter: blur(8px) saturate(130%);
+  -webkit-backdrop-filter: blur(8px) saturate(130%);
+}
+
+#genesis-ui-settings-panel .genesis-ui-settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+#genesis-ui-settings-panel .genesis-ui-settings-header strong {
+  display: block;
+  font-size: 1.05rem;
+}
+
+#genesis-ui-settings-panel .genesis-ui-settings-header small,
+#genesis-ui-settings-panel .genesis-ui-settings-note {
+  opacity: 0.75;
+  font-size: 0.86rem;
+}
+
+#genesis-ui-settings-panel details {
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+#genesis-ui-settings-panel summary {
+  cursor: pointer;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+#genesis-ui-settings-panel .genesis-ui-setting-row {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.9fr) minmax(180px, 1.6fr);
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+}
+
+#genesis-ui-settings-panel .genesis-ui-setting-checkbox {
+  display: flex;
+  grid-template-columns: unset;
+  align-items: center;
+  gap: 10px;
+}
+
+#genesis-ui-settings-panel .genesis-ui-range-wrap,
+#genesis-ui-settings-panel .genesis-ui-color-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#genesis-ui-settings-panel input[type="range"] {
+  min-width: 150px;
+  flex: 1;
+}
+
+#genesis-ui-settings-panel input[type="number"] {
+  width: 72px;
+}
+
+#genesis-ui-settings-panel input[type="text"] {
+  width: 96px;
+}
+
+#genesis-ui-settings-panel .genesis-ui-swatches {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+#genesis-ui-settings-panel .genesis-ui-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Base message cards */
+body.genesis-ui-enabled #chat .mes {
+  display: block !important;
+  position: relative !important;
+  isolation: isolate;
+  margin: 14px 8px !important;
+  padding: 12px 16px !important;
+  border-radius: var(--genesis-ui-message-radius) !important;
+  overflow: visible !important;
+  transition: filter 160ms ease, box-shadow 160ms ease;
+}
+
+body.genesis-ui-enabled #chat .mes::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+body.genesis-ui-enabled #chat .mes.genesis-ui-user-message,
+body.genesis-ui-enabled #chat .mes[is_user="true"] {
+  background:
+    linear-gradient(135deg,
+      rgba(var(--genesis-ui-user-bg-rgb), calc(var(--genesis-ui-user-bg-opacity) + var(--genesis-ui-text-panel-opacity-boost))),
+      rgba(255, 255, 255, calc(var(--genesis-ui-glass-opacity) * 0.22))) !important;
+  border: 1px solid rgba(var(--genesis-ui-user-glow-rgb), var(--genesis-ui-border-opacity)) !important;
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, calc(var(--genesis-ui-shadow-strength) * 0.48)),
+    0 0 calc(18px * var(--genesis-ui-user-glow-strength)) rgba(var(--genesis-ui-user-glow-rgb), calc(var(--genesis-ui-user-glow-strength) * 0.34)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 0 18px rgba(var(--genesis-ui-user-glow-rgb), calc(var(--genesis-ui-user-glow-strength) * 0.10)) !important;
+}
+
+body.genesis-ui-enabled #chat .mes.genesis-ui-bot-message,
+body.genesis-ui-enabled #chat .mes[is_user="false"] {
+  background:
+    linear-gradient(135deg,
+      rgba(var(--genesis-ui-bot-bg-rgb), calc(var(--genesis-ui-bot-bg-opacity) + var(--genesis-ui-text-panel-opacity-boost))),
+      rgba(255, 255, 255, calc(var(--genesis-ui-glass-opacity) * 0.22))) !important;
+  border: 1px solid rgba(var(--genesis-ui-bot-glow-rgb), var(--genesis-ui-border-opacity)) !important;
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, calc(var(--genesis-ui-shadow-strength) * 0.48)),
+    0 0 calc(18px * var(--genesis-ui-bot-glow-strength)) rgba(var(--genesis-ui-bot-glow-rgb), calc(var(--genesis-ui-bot-glow-strength) * 0.34)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 0 18px rgba(var(--genesis-ui-bot-glow-rgb), calc(var(--genesis-ui-bot-glow-strength) * 0.10)) !important;
+}
+
+body.genesis-ui-enabled #chat .mes.genesis-ui-system-message {
+  opacity: 0.86;
+}
+
+body.genesis-ui-enabled #chat .mes .mes_block,
+body.genesis-ui-enabled #chat .mes .mes_text,
+body.genesis-ui-enabled #chat .mes .ch_name {
+  position: relative;
+  z-index: 4;
+  min-width: 0;
+}
+
+body.genesis-ui-enabled #chat .mes .mes_text {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.32);
+}
+
+body.genesis-ui-enabled.genesis-ui-controls-on-top #chat .mes .mes_buttons,
+body.genesis-ui-enabled.genesis-ui-controls-on-top #chat .mes .extraMesButtons,
+body.genesis-ui-enabled.genesis-ui-controls-on-top #chat .mes .mes_edit_buttons,
+body.genesis-ui-enabled.genesis-ui-controls-on-top #chat .mes .mes_button,
+body.genesis-ui-enabled.genesis-ui-controls-on-top #chat .mes .swipe_left,
+body.genesis-ui-enabled.genesis-ui-controls-on-top #chat .mes .swipe_right,
+body.genesis-ui-enabled.genesis-ui-controls-on-top #chat .mes .fa-solid,
+body.genesis-ui-enabled.genesis-ui-controls-on-top #chat .mes button {
+  position: relative !important;
+  z-index: 40 !important;
+  pointer-events: auto !important;
+}
+
+/* VoidDrift-style floating avatars, no banners */
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .mesAvatarWrapper {
+  display: inline !important;
+  position: relative !important;
+  z-index: 2 !important;
+  width: var(--genesis-ui-avatar-size-desktop) !important;
+  max-width: var(--genesis-ui-avatar-size-desktop) !important;
+  min-width: 0 !important;
+  height: auto !important;
+  margin-top: calc(-1 * var(--genesis-ui-avatar-top-pull)) !important;
+  margin-bottom: 8px !important;
+  pointer-events: none !important;
+}
+
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes.genesis-ui-user-message .mesAvatarWrapper,
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes[is_user="true"] .mesAvatarWrapper {
+  float: left !important;
+  margin-right: var(--genesis-ui-avatar-gap) !important;
+  margin-left: 0 !important;
+}
+
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes.genesis-ui-bot-message .mesAvatarWrapper,
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes[is_user="false"] .mesAvatarWrapper {
+  float: right !important;
+  margin-left: var(--genesis-ui-avatar-gap) !important;
+  margin-right: 0 !important;
+}
+
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .avatar,
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .avatar img,
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .mesAvatarWrapper img {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  border-radius: var(--genesis-ui-avatar-radius) !important;
+  overflow: hidden !important;
+}
+
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .avatar {
+  width: var(--genesis-ui-avatar-size-desktop) !important;
+  max-width: var(--genesis-ui-avatar-size-desktop) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  background: transparent !important;
+}
+
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .mesAvatarWrapper,
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .avatar,
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .avatar img,
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .mesAvatarWrapper img {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .avatar img,
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .mesAvatarWrapper img {
+  filter: saturate(1.04) contrast(1.01);
+}
+
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .mes_block {
+  display: block !important;
+  overflow: visible !important;
+  transform: none !important;
+  min-width: 0 !important;
+}
+
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .mes_text {
+  padding-top: var(--genesis-ui-text-top-padding) !important;
+  padding-right: 10px !important;
+  padding-bottom: 8px !important;
+  overflow-wrap: anywhere;
+}
+
+body.genesis-ui-enabled #chat .mes:hover {
+  filter: brightness(1.03);
+}
+
+/* Mobile safe mode */
+@media screen and (max-width: 768px) {
+  body.genesis-ui-enabled.genesis-ui-mobile-safe-enabled.genesis-ui-big-avatars #chat .mes {
+    margin: 12px 4px !important;
+    padding: 10px !important;
+  }
+
+  body.genesis-ui-enabled.genesis-ui-mobile-safe-enabled.genesis-ui-big-avatars #chat .mes .mesAvatarWrapper {
+    width: var(--genesis-ui-avatar-size-mobile) !important;
+    max-width: var(--genesis-ui-avatar-size-mobile) !important;
+    margin-top: 0 !important;
+    margin-bottom: 6px !important;
+  }
+
+  body.genesis-ui-enabled.genesis-ui-mobile-safe-enabled.genesis-ui-big-avatars #chat .mes .avatar {
+    width: var(--genesis-ui-avatar-size-mobile) !important;
+    max-width: var(--genesis-ui-avatar-size-mobile) !important;
+  }
+
+  body.genesis-ui-enabled.genesis-ui-mobile-safe-enabled.genesis-ui-big-avatars #chat .mes.genesis-ui-user-message .mesAvatarWrapper,
+  body.genesis-ui-enabled.genesis-ui-mobile-safe-enabled.genesis-ui-big-avatars #chat .mes[is_user="true"] .mesAvatarWrapper,
+  body.genesis-ui-enabled.genesis-ui-mobile-safe-enabled.genesis-ui-big-avatars #chat .mes.genesis-ui-bot-message .mesAvatarWrapper,
+  body.genesis-ui-enabled.genesis-ui-mobile-safe-enabled.genesis-ui-big-avatars #chat .mes[is_user="false"] .mesAvatarWrapper {
+    float: left !important;
+    margin-right: 10px !important;
+    margin-left: 0 !important;
+  }
+
+  body.genesis-ui-enabled.genesis-ui-mobile-safe-enabled.genesis-ui-big-avatars #chat .mes .mes_text {
+    padding-top: 24px !important;
+  }
+
+
+  #genesis-ui-settings-panel .genesis-ui-setting-row {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  body.genesis-ui-enabled.genesis-ui-mobile-safe-enabled.genesis-ui-big-avatars #chat .mes .mesAvatarWrapper {
+    float: none !important;
+    display: block !important;
+    margin: 0 auto 4px auto !important;
+  }
+
+  body.genesis-ui-enabled.genesis-ui-mobile-safe-enabled.genesis-ui-big-avatars #chat .mes .mes_text {
+    padding-top: 8px !important;
+  }
+}
+
+
+/* v0.1.3 system/default assistant avatar guard
+   ST utility messages, no-API hints and default Assistant cards should not become giant RPG portraits. */
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes.genesis-ui-system-message {
+  background: rgba(0, 0, 0, 0.22) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, calc(var(--genesis-ui-shadow-strength) * 0.32)) !important;
+}
+
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes.genesis-ui-system-message .mesAvatarWrapper {
+  display: inline-flex !important;
+  float: none !important;
+  width: 44px !important;
+  max-width: 44px !important;
+  height: 44px !important;
+  max-height: 44px !important;
+  margin: 0 10px 4px 0 !important;
+  vertical-align: top !important;
+  pointer-events: auto !important;
+}
+
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes.genesis-ui-system-message .avatar,
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes.genesis-ui-system-message .avatar img,
+body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes.genesis-ui-system-message .mesAvatarWrapper img {
+  width: 44px !important;
+  max-width: 44px !important;
+  height: 44px !important;
+  max-height: 44px !important;
+  object-fit: cover !important;
+  border-radius: 8px !important;
+}
