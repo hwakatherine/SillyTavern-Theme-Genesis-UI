@@ -1,5 +1,5 @@
 /*
- * Genesis UI v0.1.7
+ * Genesis UI v0.1.6
  * Lightweight glassmorphism RPG interface for SillyTavern.
  * VoidDrift-inspired floating avatar layout, without banners.
  */
@@ -9,7 +9,7 @@ const GENESIS_UI_DYNAMIC_STYLE_ID = 'genesis-ui-dynamic-style';
 const GENESIS_UI_PANEL_ID = 'genesis-ui-settings-panel';
 
 const DEFAULT_SETTINGS = Object.freeze({
-    settingsVersion: '0.1.7',
+    settingsVersion: '0.1.6',
     enabled: true,
     bigAvatars: true,
     mobileSafeMode: true,
@@ -70,7 +70,7 @@ const SETTING_GROUPS = [
             { key: 'messageRadius', label: 'Message corner radius', type: 'range', min: 0, max: 60, step: 1, suffix: 'px' },
             { key: 'shadowIntensity', label: 'Shadow intensity', type: 'range', min: 0, max: 1, step: 0.01 },
             { key: 'textPanelOpacityBoost', label: 'Text readability boost', type: 'range', min: 0, max: 0.25, step: 0.01 },
-            { key: 'messageBackdropBlur', label: 'Message background clone blur', type: 'range', min: 0, max: 60, step: 1, suffix: 'px' }
+            { key: 'messageBackdropBlur', label: 'Message-only backdrop blur', type: 'range', min: 0, max: 18, step: 1, suffix: 'px' }
         ]
     },
     {
@@ -123,12 +123,12 @@ function getSettings() {
 
     // v0.1.2 migration: v0.1.1 defaults pulled avatars upward and framed the whole portrait area too aggressively.
     // Only rewrite the old shipped defaults; custom user values can still be adjusted manually.
-    if (settings.settingsVersion !== '0.1.7') {
+    if (settings.settingsVersion !== '0.1.6') {
         if (settings.avatarTopPull === undefined || Number(settings.avatarTopPull) === 72) settings.avatarTopPull = 0;
         if (settings.textTopPadding === undefined || Number(settings.textTopPadding) === 46) settings.textTopPadding = 0;
         if (settings.avatarRadius === undefined || Number(settings.avatarRadius) === 18) settings.avatarRadius = 0;
         if (settings.borderOpacity === undefined || Number(settings.borderOpacity) === 0.30) settings.borderOpacity = 0;
-        settings.settingsVersion = '0.1.7';
+        settings.settingsVersion = '0.1.6';
         saveSettings();
     }
 
@@ -162,46 +162,6 @@ function hexToRgb(hex) {
     return `${r}, ${g}, ${b}`;
 }
 
-
-function syncBackgroundSource() {
-    const root = document.documentElement;
-    const selectors = [
-        '#bg1',
-        '#bg2',
-        '#bg_custom',
-        '#background',
-        '.bg_custom',
-        '.background-image',
-        'body',
-        'html'
-    ];
-
-    let picked = null;
-    for (const selector of selectors) {
-        const element = document.querySelector(selector);
-        if (!element) continue;
-        const style = getComputedStyle(element);
-        const image = style.backgroundImage;
-        if (image && image !== 'none' && /url\(/i.test(image)) {
-            picked = style;
-            break;
-        }
-    }
-
-    if (!picked) {
-        root.style.setProperty('--genesis-ui-page-bg-image', 'none');
-        root.style.setProperty('--genesis-ui-page-bg-size', 'cover');
-        root.style.setProperty('--genesis-ui-page-bg-position', 'center center');
-        root.style.setProperty('--genesis-ui-page-bg-repeat', 'no-repeat');
-        return;
-    }
-
-    root.style.setProperty('--genesis-ui-page-bg-image', picked.backgroundImage || 'none');
-    root.style.setProperty('--genesis-ui-page-bg-size', picked.backgroundSize || 'cover');
-    root.style.setProperty('--genesis-ui-page-bg-position', picked.backgroundPosition || 'center center');
-    root.style.setProperty('--genesis-ui-page-bg-repeat', picked.backgroundRepeat || 'no-repeat');
-}
-
 function applySettings() {
     const settings = getSettings();
     const body = document.body;
@@ -230,7 +190,7 @@ function applySettings() {
     const messageRadius = clampNumber(settings.messageRadius, 0, 60);
     const shadowIntensity = clampNumber(settings.shadowIntensity, 0, 1);
     const textPanelOpacityBoost = clampNumber(settings.textPanelOpacityBoost, 0, 0.25);
-    const messageBackdropBlur = clampNumber(settings.messageBackdropBlur, 0, 60);
+    const messageBackdropBlur = clampNumber(settings.messageBackdropBlur, 0, 18);
     const userMessageOpacity = clampNumber(settings.userMessageOpacity, 0, 1);
     const userGlowStrength = clampNumber(settings.userGlowStrength, 0, 1);
     const botMessageOpacity = clampNumber(settings.botMessageOpacity, 0, 1);
@@ -264,7 +224,6 @@ function applySettings() {
 }
     `.trim();
 
-    syncBackgroundSource();
     scheduleMessageRefresh();
 }
 
@@ -529,7 +488,7 @@ function renderSettingsPanel() {
 
     const note = document.createElement('div');
     note.className = 'genesis-ui-settings-note';
-    note.textContent = 'Tip: background clone blur fakes glass by copying the Tavern background into each message card and blurring that copy. Lower opacity/readability if the blur is hidden by a dense tint.';
+    note.textContent = 'Tip: Message blur is drawn on each message card only. If it is hard to notice, lower opacity/readability first; a fully opaque card cannot show what is blurred behind it.';
     panel.appendChild(note);
 
     target.appendChild(panel);
@@ -559,8 +518,6 @@ function initGenesisUI() {
     getSettings();
     renderSettingsPanel();
     applySettings();
-    setTimeout(syncBackgroundSource, 250);
-    setTimeout(syncBackgroundSource, 1200);
     scheduleMessageRefresh();
     startMessageObserver();
     addExtensionMenuButton();
