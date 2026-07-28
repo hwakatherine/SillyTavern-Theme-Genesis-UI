@@ -1,4 +1,4 @@
-/* Genesis UI v0.1.6 */
+/* Genesis UI v0.1.7 */
 
 :root {
   --genesis-ui-avatar-size-desktop: 304px;
@@ -14,6 +14,10 @@
   --genesis-ui-shadow-strength: 0.30;
   --genesis-ui-text-panel-opacity-boost: 0.08;
   --genesis-ui-message-backdrop-blur: 0px;
+  --genesis-ui-page-bg-image: none;
+  --genesis-ui-page-bg-size: cover;
+  --genesis-ui-page-bg-position: center center;
+  --genesis-ui-page-bg-repeat: no-repeat;
 
   --genesis-ui-user-bg-rgb: 40, 120, 255;
   --genesis-ui-user-bg-opacity: 0.20;
@@ -432,4 +436,120 @@ body.genesis-ui-enabled #chat .mes.genesis-ui-system-message::before {
   background: rgba(0, 0, 0, 0.22) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow: 0 10px 24px rgba(0, 0, 0, calc(var(--genesis-ui-shadow-strength) * 0.32)) !important;
+}
+
+
+/* v0.1.7: fake per-card background blur.
+   backdrop-filter proved unreliable under ST theme layers, because it was often blurring a flat overlay instead of the real page art.
+   This version copies the current Tavern background into each message card, clips it to the card, and blurs that copy. */
+body.genesis-ui-enabled #chat .mes,
+body.genesis-ui-enabled #chat .mes.genesis-ui-user-message,
+body.genesis-ui-enabled #chat .mes[is_user="true"],
+body.genesis-ui-enabled #chat .mes.genesis-ui-bot-message,
+body.genesis-ui-enabled #chat .mes[is_user="false"],
+body.genesis-ui-enabled #chat .mes.genesis-ui-system-message {
+  background: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+body.genesis-ui-enabled #chat .mes::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: var(--genesis-ui-message-radius) !important;
+  overflow: hidden;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  filter: none !important;
+  transform: translateZ(0);
+}
+
+body.genesis-ui-enabled #chat .mes.genesis-ui-user-message,
+body.genesis-ui-enabled #chat .mes[is_user="true"] {
+  border: 1px solid rgba(var(--genesis-ui-user-glow-rgb), var(--genesis-ui-border-opacity)) !important;
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, calc(var(--genesis-ui-shadow-strength) * 0.48)),
+    0 0 calc(18px * var(--genesis-ui-user-glow-strength)) rgba(var(--genesis-ui-user-glow-rgb), calc(var(--genesis-ui-user-glow-strength) * 0.34)) !important;
+}
+
+body.genesis-ui-enabled #chat .mes.genesis-ui-bot-message,
+body.genesis-ui-enabled #chat .mes[is_user="false"] {
+  border: 1px solid rgba(var(--genesis-ui-bot-glow-rgb), var(--genesis-ui-border-opacity)) !important;
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, calc(var(--genesis-ui-shadow-strength) * 0.48)),
+    0 0 calc(18px * var(--genesis-ui-bot-glow-strength)) rgba(var(--genesis-ui-bot-glow-rgb), calc(var(--genesis-ui-bot-glow-strength) * 0.34)) !important;
+}
+
+body.genesis-ui-enabled #chat .mes.genesis-ui-system-message {
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, calc(var(--genesis-ui-shadow-strength) * 0.32)) !important;
+}
+
+body.genesis-ui-enabled #chat .mes.genesis-ui-user-message::before,
+body.genesis-ui-enabled #chat .mes[is_user="true"]::before {
+  background-image:
+    linear-gradient(135deg,
+      rgba(var(--genesis-ui-user-bg-rgb), calc(var(--genesis-ui-user-bg-opacity) + var(--genesis-ui-text-panel-opacity-boost))),
+      rgba(255, 255, 255, calc(var(--genesis-ui-glass-opacity) * 0.22))) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 0 18px rgba(var(--genesis-ui-user-glow-rgb), calc(var(--genesis-ui-user-glow-strength) * 0.10)) !important;
+}
+
+body.genesis-ui-enabled #chat .mes.genesis-ui-bot-message::before,
+body.genesis-ui-enabled #chat .mes[is_user="false"]::before {
+  background-image:
+    linear-gradient(135deg,
+      rgba(var(--genesis-ui-bot-bg-rgb), calc(var(--genesis-ui-bot-bg-opacity) + var(--genesis-ui-text-panel-opacity-boost))),
+      rgba(255, 255, 255, calc(var(--genesis-ui-glass-opacity) * 0.22))) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 0 18px rgba(var(--genesis-ui-bot-glow-rgb), calc(var(--genesis-ui-bot-glow-strength) * 0.10)) !important;
+}
+
+body.genesis-ui-enabled #chat .mes.genesis-ui-system-message::before {
+  background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.22), rgba(255, 255, 255, 0.03)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+body.genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes.genesis-ui-user-message::before,
+body.genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes[is_user="true"]::before {
+  background-image:
+    linear-gradient(135deg,
+      rgba(var(--genesis-ui-user-bg-rgb), calc(var(--genesis-ui-user-bg-opacity) + var(--genesis-ui-text-panel-opacity-boost))),
+      rgba(255, 255, 255, calc(var(--genesis-ui-glass-opacity) * 0.22))),
+    var(--genesis-ui-page-bg-image) !important;
+  background-size: auto, var(--genesis-ui-page-bg-size) !important;
+  background-position: center center, var(--genesis-ui-page-bg-position) !important;
+  background-repeat: no-repeat, var(--genesis-ui-page-bg-repeat) !important;
+  background-attachment: scroll, fixed !important;
+  filter: blur(var(--genesis-ui-message-backdrop-blur)) saturate(1.16) contrast(1.03) !important;
+}
+
+body.genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes.genesis-ui-bot-message::before,
+body.genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes[is_user="false"]::before {
+  background-image:
+    linear-gradient(135deg,
+      rgba(var(--genesis-ui-bot-bg-rgb), calc(var(--genesis-ui-bot-bg-opacity) + var(--genesis-ui-text-panel-opacity-boost))),
+      rgba(255, 255, 255, calc(var(--genesis-ui-glass-opacity) * 0.22))),
+    var(--genesis-ui-page-bg-image) !important;
+  background-size: auto, var(--genesis-ui-page-bg-size) !important;
+  background-position: center center, var(--genesis-ui-page-bg-position) !important;
+  background-repeat: no-repeat, var(--genesis-ui-page-bg-repeat) !important;
+  background-attachment: scroll, fixed !important;
+  filter: blur(var(--genesis-ui-message-backdrop-blur)) saturate(1.16) contrast(1.03) !important;
+}
+
+body.genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes.genesis-ui-system-message::before {
+  background-image:
+    linear-gradient(135deg, rgba(0, 0, 0, 0.22), rgba(255, 255, 255, 0.03)),
+    var(--genesis-ui-page-bg-image) !important;
+  background-size: auto, var(--genesis-ui-page-bg-size) !important;
+  background-position: center center, var(--genesis-ui-page-bg-position) !important;
+  background-repeat: no-repeat, var(--genesis-ui-page-bg-repeat) !important;
+  background-attachment: scroll, fixed !important;
+  filter: blur(var(--genesis-ui-message-backdrop-blur)) saturate(1.08) !important;
 }
