@@ -1,13 +1,13 @@
 {
   "display_name": "Genesis UI",
-  "description": "A lightweight glassmorphism RPG interface theme for SillyTavern with floating avatars, customizable message colors, optional neon borders, and mobile-safe layout.",
+  "description": "A lightweight glassmorphism RPG interface theme for SillyTavern with VoidDrift-style floating avatars, customizable message colors, optional neon borders, and mobile-safe layout.",
   "loading_order": 999,
   "requires": [],
   "optional": [],
   "js": "index.js",
   "css": "style.css",
   "author": "Nox & Katerina",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "MIT",
   "auto_update": false,
   "minimum_client_version": "1.12.0"

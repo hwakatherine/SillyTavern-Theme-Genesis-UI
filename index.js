@@ -1,5 +1,5 @@
 /*
- * Genesis UI v0.1.5
+ * Genesis UI v0.1.6
  * Lightweight glassmorphism RPG interface for SillyTavern.
  * VoidDrift-inspired floating avatar layout, without banners.
  */
@@ -9,7 +9,7 @@ const GENESIS_UI_DYNAMIC_STYLE_ID = 'genesis-ui-dynamic-style';
 const GENESIS_UI_PANEL_ID = 'genesis-ui-settings-panel';
 
 const DEFAULT_SETTINGS = Object.freeze({
-    settingsVersion: '0.1.5',
+    settingsVersion: '0.1.6',
     enabled: true,
     bigAvatars: true,
     mobileSafeMode: true,
@@ -123,12 +123,12 @@ function getSettings() {
 
     // v0.1.2 migration: v0.1.1 defaults pulled avatars upward and framed the whole portrait area too aggressively.
     // Only rewrite the old shipped defaults; custom user values can still be adjusted manually.
-    if (settings.settingsVersion !== '0.1.5') {
+    if (settings.settingsVersion !== '0.1.6') {
         if (settings.avatarTopPull === undefined || Number(settings.avatarTopPull) === 72) settings.avatarTopPull = 0;
         if (settings.textTopPadding === undefined || Number(settings.textTopPadding) === 46) settings.textTopPadding = 0;
         if (settings.avatarRadius === undefined || Number(settings.avatarRadius) === 18) settings.avatarRadius = 0;
         if (settings.borderOpacity === undefined || Number(settings.borderOpacity) === 0.30) settings.borderOpacity = 0;
-        settings.settingsVersion = '0.1.5';
+        settings.settingsVersion = '0.1.6';
         saveSettings();
     }
 
@@ -448,7 +448,7 @@ function renderSettingsPanel() {
     header.innerHTML = `
         <div>
             <strong>Genesis UI</strong>
-            <small>VoidDrift-style floating avatars, no banners, v0.1.5</small>
+            <small>VoidDrift-style floating avatars, no banners, v0.1.6</small>
         </div>
     `;
 
@@ -488,7 +488,7 @@ function renderSettingsPanel() {
 
     const note = document.createElement('div');
     note.className = 'genesis-ui-settings-note';
-    note.textContent = 'Tip: Message-only backdrop blur affects only individual chat message cards. Keep it low if the browser starts behaving like a dying toaster.';
+    note.textContent = 'Tip: Message blur is drawn on each message card only. If it is hard to notice, lower opacity/readability first; a fully opaque card cannot show what is blurred behind it.';
     panel.appendChild(note);
 
     target.appendChild(panel);

@@ -1,4 +1,4 @@
-/* Genesis UI v0.1.5 */
+/* Genesis UI v0.1.6 */
 
 :root {
   --genesis-ui-avatar-size-desktop: 304px;
@@ -366,4 +366,70 @@ body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes.genesis-ui-system-mess
   max-height: 44px !important;
   object-fit: cover !important;
   border-radius: 8px !important;
+}
+
+
+/* v0.1.6: real per-message glass layer.
+   Parent .mes stays transparent; ::before draws the card surface.
+   Backdrop blur lives on ::before, so it affects only the visible message card area. */
+body.genesis-ui-enabled #chat .mes,
+body.genesis-ui-enabled #chat .mes.genesis-ui-user-message,
+body.genesis-ui-enabled #chat .mes[is_user="true"],
+body.genesis-ui-enabled #chat .mes.genesis-ui-bot-message,
+body.genesis-ui-enabled #chat .mes[is_user="false"],
+body.genesis-ui-enabled #chat .mes.genesis-ui-system-message {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+body.genesis-ui-enabled #chat .mes::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: var(--genesis-ui-message-radius) !important;
+  overflow: hidden;
+}
+
+body.genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes::before {
+  -webkit-backdrop-filter: blur(var(--genesis-ui-message-backdrop-blur)) saturate(125%) !important;
+  backdrop-filter: blur(var(--genesis-ui-message-backdrop-blur)) saturate(125%) !important;
+}
+
+body.genesis-ui-enabled #chat .mes.genesis-ui-user-message::before,
+body.genesis-ui-enabled #chat .mes[is_user="true"]::before {
+  background:
+    linear-gradient(135deg,
+      rgba(var(--genesis-ui-user-bg-rgb), calc(var(--genesis-ui-user-bg-opacity) + var(--genesis-ui-text-panel-opacity-boost))),
+      rgba(255, 255, 255, calc(var(--genesis-ui-glass-opacity) * 0.22))) !important;
+  border: 1px solid rgba(var(--genesis-ui-user-glow-rgb), var(--genesis-ui-border-opacity)) !important;
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, calc(var(--genesis-ui-shadow-strength) * 0.48)),
+    0 0 calc(18px * var(--genesis-ui-user-glow-strength)) rgba(var(--genesis-ui-user-glow-rgb), calc(var(--genesis-ui-user-glow-strength) * 0.34)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 0 18px rgba(var(--genesis-ui-user-glow-rgb), calc(var(--genesis-ui-user-glow-strength) * 0.10)) !important;
+}
+
+body.genesis-ui-enabled #chat .mes.genesis-ui-bot-message::before,
+body.genesis-ui-enabled #chat .mes[is_user="false"]::before {
+  background:
+    linear-gradient(135deg,
+      rgba(var(--genesis-ui-bot-bg-rgb), calc(var(--genesis-ui-bot-bg-opacity) + var(--genesis-ui-text-panel-opacity-boost))),
+      rgba(255, 255, 255, calc(var(--genesis-ui-glass-opacity) * 0.22))) !important;
+  border: 1px solid rgba(var(--genesis-ui-bot-glow-rgb), var(--genesis-ui-border-opacity)) !important;
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, calc(var(--genesis-ui-shadow-strength) * 0.48)),
+    0 0 calc(18px * var(--genesis-ui-bot-glow-strength)) rgba(var(--genesis-ui-bot-glow-rgb), calc(var(--genesis-ui-bot-glow-strength) * 0.34)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 0 18px rgba(var(--genesis-ui-bot-glow-rgb), calc(var(--genesis-ui-bot-glow-strength) * 0.10)) !important;
+}
+
+body.genesis-ui-enabled #chat .mes.genesis-ui-system-message::before {
+  background: rgba(0, 0, 0, 0.22) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, calc(var(--genesis-ui-shadow-strength) * 0.32)) !important;
 }
