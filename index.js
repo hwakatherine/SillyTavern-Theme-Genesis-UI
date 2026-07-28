@@ -1,5 +1,5 @@
 /*
- * Genesis UI v0.1.4
+ * Genesis UI v0.1.5
  * Lightweight glassmorphism RPG interface for SillyTavern.
  * VoidDrift-inspired floating avatar layout, without banners.
  */
@@ -9,7 +9,7 @@ const GENESIS_UI_DYNAMIC_STYLE_ID = 'genesis-ui-dynamic-style';
 const GENESIS_UI_PANEL_ID = 'genesis-ui-settings-panel';
 
 const DEFAULT_SETTINGS = Object.freeze({
-    settingsVersion: '0.1.4',
+    settingsVersion: '0.1.5',
     enabled: true,
     bigAvatars: true,
     mobileSafeMode: true,
@@ -28,6 +28,7 @@ const DEFAULT_SETTINGS = Object.freeze({
     messageRadius: 22,
     shadowIntensity: 0.30,
     textPanelOpacityBoost: 0.08,
+    messageBackdropBlur: 0,
 
     userMessageColor: '#2878ff',
     userMessageOpacity: 0.20,
@@ -68,7 +69,8 @@ const SETTING_GROUPS = [
             { key: 'borderOpacity', label: 'Border opacity', type: 'range', min: 0, max: 1, step: 0.01 },
             { key: 'messageRadius', label: 'Message corner radius', type: 'range', min: 0, max: 60, step: 1, suffix: 'px' },
             { key: 'shadowIntensity', label: 'Shadow intensity', type: 'range', min: 0, max: 1, step: 0.01 },
-            { key: 'textPanelOpacityBoost', label: 'Text readability boost', type: 'range', min: 0, max: 0.25, step: 0.01 }
+            { key: 'textPanelOpacityBoost', label: 'Text readability boost', type: 'range', min: 0, max: 0.25, step: 0.01 },
+            { key: 'messageBackdropBlur', label: 'Message-only backdrop blur', type: 'range', min: 0, max: 18, step: 1, suffix: 'px' }
         ]
     },
     {
@@ -121,12 +123,12 @@ function getSettings() {
 
     // v0.1.2 migration: v0.1.1 defaults pulled avatars upward and framed the whole portrait area too aggressively.
     // Only rewrite the old shipped defaults; custom user values can still be adjusted manually.
-    if (settings.settingsVersion !== '0.1.4') {
+    if (settings.settingsVersion !== '0.1.5') {
         if (settings.avatarTopPull === undefined || Number(settings.avatarTopPull) === 72) settings.avatarTopPull = 0;
         if (settings.textTopPadding === undefined || Number(settings.textTopPadding) === 46) settings.textTopPadding = 0;
         if (settings.avatarRadius === undefined || Number(settings.avatarRadius) === 18) settings.avatarRadius = 0;
         if (settings.borderOpacity === undefined || Number(settings.borderOpacity) === 0.30) settings.borderOpacity = 0;
-        settings.settingsVersion = '0.1.4';
+        settings.settingsVersion = '0.1.5';
         saveSettings();
     }
 
@@ -168,6 +170,7 @@ function applySettings() {
     body.classList.toggle('genesis-ui-big-avatars', !!settings.bigAvatars);
     body.classList.toggle('genesis-ui-mobile-safe-enabled', !!settings.mobileSafeMode);
     body.classList.toggle('genesis-ui-controls-on-top', !!settings.controlsOnTop);
+    body.classList.toggle('genesis-ui-message-blur-enabled', Number(settings.messageBackdropBlur) > 0);
 
     let style = document.getElementById(GENESIS_UI_DYNAMIC_STYLE_ID);
     if (!style) {
@@ -187,6 +190,7 @@ function applySettings() {
     const messageRadius = clampNumber(settings.messageRadius, 0, 60);
     const shadowIntensity = clampNumber(settings.shadowIntensity, 0, 1);
     const textPanelOpacityBoost = clampNumber(settings.textPanelOpacityBoost, 0, 0.25);
+    const messageBackdropBlur = clampNumber(settings.messageBackdropBlur, 0, 18);
     const userMessageOpacity = clampNumber(settings.userMessageOpacity, 0, 1);
     const userGlowStrength = clampNumber(settings.userGlowStrength, 0, 1);
     const botMessageOpacity = clampNumber(settings.botMessageOpacity, 0, 1);
@@ -206,6 +210,7 @@ function applySettings() {
   --genesis-ui-message-radius: ${messageRadius}px;
   --genesis-ui-shadow-strength: ${shadowIntensity};
   --genesis-ui-text-panel-opacity-boost: ${textPanelOpacityBoost};
+  --genesis-ui-message-backdrop-blur: ${messageBackdropBlur}px;
 
   --genesis-ui-user-bg-rgb: ${hexToRgb(settings.userMessageColor)};
   --genesis-ui-user-bg-opacity: ${userMessageOpacity};
@@ -443,7 +448,7 @@ function renderSettingsPanel() {
     header.innerHTML = `
         <div>
             <strong>Genesis UI</strong>
-            <small>VoidDrift-style floating avatars, no banners, v0.1.3</small>
+            <small>VoidDrift-style floating avatars, no banners, v0.1.5</small>
         </div>
     `;
 
@@ -483,7 +488,7 @@ function renderSettingsPanel() {
 
     const note = document.createElement('div');
     note.className = 'genesis-ui-settings-note';
-    note.textContent = 'Tip: avatar upward pull is 0 by default now. Increase it only if you deliberately want the portrait to climb over the message.';
+    note.textContent = 'Tip: Message-only backdrop blur affects only individual chat message cards. Keep it low if the browser starts behaving like a dying toaster.';
     panel.appendChild(note);
 
     target.appendChild(panel);
