@@ -70,7 +70,7 @@ const SETTING_GROUPS = [
             { key: 'messageRadius', label: 'Message corner radius', type: 'range', min: 0, max: 60, step: 1, suffix: 'px' },
             { key: 'shadowIntensity', label: 'Shadow intensity', type: 'range', min: 0, max: 1, step: 0.01 },
             { key: 'textPanelOpacityBoost', label: 'Text readability boost', type: 'range', min: 0, max: 0.25, step: 0.01 },
-            { key: 'messageBackdropBlur', label: 'Message true background blur', type: 'range', min: 0, max: 64, step: 1, suffix: 'px' }
+            { key: 'messageBackdropBlur', label: 'Message true background blur', type: 'range', min: 0, max: 16, step: 1, suffix: 'px' }
         ]
     },
     {
