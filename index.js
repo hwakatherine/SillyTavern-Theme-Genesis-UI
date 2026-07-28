@@ -1,5 +1,5 @@
 /*
- * Genesis UI v0.1.6
+ * Genesis UI v0.1.7-hoverfix.1
  * Lightweight glassmorphism RPG interface for SillyTavern.
  * VoidDrift-inspired floating avatar layout, without banners.
  */
@@ -9,7 +9,7 @@ const GENESIS_UI_DYNAMIC_STYLE_ID = 'genesis-ui-dynamic-style';
 const GENESIS_UI_PANEL_ID = 'genesis-ui-settings-panel';
 
 const DEFAULT_SETTINGS = Object.freeze({
-    settingsVersion: '0.1.6',
+    settingsVersion: '0.1.7-hoverfix.1',
     enabled: true,
     bigAvatars: true,
     mobileSafeMode: true,
@@ -128,7 +128,7 @@ function getSettings() {
         if (settings.textTopPadding === undefined || Number(settings.textTopPadding) === 46) settings.textTopPadding = 0;
         if (settings.avatarRadius === undefined || Number(settings.avatarRadius) === 18) settings.avatarRadius = 0;
         if (settings.borderOpacity === undefined || Number(settings.borderOpacity) === 0.30) settings.borderOpacity = 0;
-        settings.settingsVersion = '0.1.6';
+        settings.settingsVersion = '0.1.7-hoverfix.1';
         saveSettings();
     }
 

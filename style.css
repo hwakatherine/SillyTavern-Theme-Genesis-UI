@@ -1,4 +1,4 @@
-/* Genesis UI v0.1.6 */
+/* Genesis UI v0.1.7-hoverfix.1 */
 
 :root {
   --genesis-ui-avatar-size-desktop: 304px;
@@ -283,8 +283,16 @@ body.genesis-ui-enabled.genesis-ui-big-avatars #chat .mes .mes_text {
   overflow-wrap: anywhere;
 }
 
-body.genesis-ui-enabled #chat .mes:hover {
-  filter: brightness(1.03);
+/* Hover/touch stabilization: a filter on the parent .mes can break backdrop-filter
+   compositing in Chromium/Safari, making the blur disappear when the card is active.
+   Keep the parent clean and do hover styling on the glass layer instead. */
+body.genesis-ui-enabled #chat .mes:hover,
+body.genesis-ui-enabled #chat .mes:active,
+body.genesis-ui-enabled #chat .mes:focus,
+body.genesis-ui-enabled #chat .mes:focus-within,
+body.genesis-ui-enabled #chat .mes.selected {
+  filter: none !important;
+  transform: none !important;
 }
 
 /* Mobile safe mode */
@@ -398,6 +406,21 @@ body.genesis-ui-enabled #chat .mes::before {
 }
 
 body:not(.no-blur).genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes::before {
+  -webkit-backdrop-filter: blur(var(--genesis-ui-message-backdrop-blur)) saturate(145%) contrast(1.04) !important;
+  backdrop-filter: blur(var(--genesis-ui-message-backdrop-blur)) saturate(145%) contrast(1.04) !important;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: backdrop-filter, -webkit-backdrop-filter;
+}
+
+/* Do not let hover/active/focus states switch the glass layer back to a non-blurred card. */
+body:not(.no-blur).genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes:hover::before,
+body:not(.no-blur).genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes:active::before,
+body:not(.no-blur).genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes:focus::before,
+body:not(.no-blur).genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes:focus-within::before,
+body:not(.no-blur).genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes.selected::before {
   -webkit-backdrop-filter: blur(var(--genesis-ui-message-backdrop-blur)) saturate(145%) contrast(1.04) !important;
   backdrop-filter: blur(var(--genesis-ui-message-backdrop-blur)) saturate(145%) contrast(1.04) !important;
 }
