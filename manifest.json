@@ -1,13 +1,13 @@
 {
   "display_name": "Genesis UI",
-  "description": "Genesis UI test build: VoidDrift-style avatars with message-only true blur mode with hover/touch stabilization. When enabled, the chat panel becomes transparent so individual message cards can blur the real page background.",
+  "description": "Genesis UI. When enabled, the chat panel becomes transparent so individual message cards can blur the real page background.",
   "loading_order": 999,
   "requires": [],
   "optional": [],
   "js": "index.js",
   "css": "style.css",
   "author": "Nox & Katerina",
-  "version": "0.1.7-hoverfix.1",
+  "version": "0.1.7",
   "license": "MIT",
   "auto_update": false,
   "minimum_client_version": "1.12.0"
