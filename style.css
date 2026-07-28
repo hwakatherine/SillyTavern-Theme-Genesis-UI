@@ -1,4 +1,4 @@
-/* Genesis UI v0.1.4 */
+/* Genesis UI v0.1.5 */
 
 :root {
   --genesis-ui-avatar-size-desktop: 304px;
@@ -13,6 +13,7 @@
   --genesis-ui-message-radius: 22px;
   --genesis-ui-shadow-strength: 0.30;
   --genesis-ui-text-panel-opacity-boost: 0.08;
+  --genesis-ui-message-backdrop-blur: 0px;
 
   --genesis-ui-user-bg-rgb: 40, 120, 255;
   --genesis-ui-user-bg-opacity: 0.20;
@@ -135,6 +136,14 @@ body.genesis-ui-enabled #chat .mes::after {
   content: "";
   display: block;
   clear: both;
+}
+
+/* Optional per-message backdrop blur.
+   This blurs only the background visible through each message card, not the whole chat window.
+   Disabled when the slider is 0, because backdrop-filter on many messages can be a tiny frontend demon. */
+body.genesis-ui-enabled.genesis-ui-message-blur-enabled #chat .mes {
+  backdrop-filter: blur(var(--genesis-ui-message-backdrop-blur)) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(var(--genesis-ui-message-backdrop-blur)) saturate(125%) !important;
 }
 
 body.genesis-ui-enabled #chat .mes.genesis-ui-user-message,
