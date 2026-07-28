@@ -20,6 +20,11 @@ Genesis UI is a lightweight glassmorphism RPG interface extension for SillyTaver
 5. Find **Genesis UI** and adjust the sliders/colors.
 
 
+## Update v0.1.7
+- Added optional message-level background blur.
+- Fixed blur disappearing on hover/tap by removing conflicting message filter effects.
+- Added safer blur limits for performance.
+
 ## Notes
 
 This is still a test build. If SillyTavern or another theme overrides message layout with very strong CSS, disable the other theme first and test Genesis UI on the standard ST theme.
