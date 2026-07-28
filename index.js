@@ -487,8 +487,7 @@ function renderSettingsPanel() {
 
     const note = document.createElement('div');
     note.className = 'genesis-ui-settings-note';
-    note.textContent = 'Tip: v0.1.7 tests real message-only blur by making the chat panel transparent while the slider is above 0. Start at 18–28px; keep opacity below 0.55 if you want to actually see blur.';
-    panel.appendChild(note);
+        panel.appendChild(note);
 
     target.appendChild(panel);
 }
