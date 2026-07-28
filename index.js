@@ -9,7 +9,7 @@ const GENESIS_UI_DYNAMIC_STYLE_ID = 'genesis-ui-dynamic-style';
 const GENESIS_UI_PANEL_ID = 'genesis-ui-settings-panel';
 
 const DEFAULT_SETTINGS = Object.freeze({
-    settingsVersion: '0.1.7-hoverfix.1',
+    settingsVersion: '0.1.7',
     enabled: true,
     bigAvatars: true,
     mobileSafeMode: true,
@@ -448,7 +448,6 @@ function renderSettingsPanel() {
     header.innerHTML = `
         <div>
             <strong>Genesis UI</strong>
-            <small>VoidDrift-style avatars, message-only true blur test, v0.1.7</small>
         </div>
     `;
 
