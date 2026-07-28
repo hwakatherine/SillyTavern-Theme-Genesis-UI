@@ -1,13 +1,13 @@
 {
   "display_name": "Genesis UI",
-  "description": "A lightweight glassmorphism RPG interface theme for SillyTavern with VoidDrift-style floating avatars, customizable message colors, optional neon borders, and mobile-safe layout.",
+  "description": "Genesis UI test build: VoidDrift-style avatars with message-only true blur mode. When enabled, the chat panel becomes transparent so individual message cards can blur the real page background.",
   "loading_order": 999,
   "requires": [],
   "optional": [],
   "js": "index.js",
   "css": "style.css",
   "author": "Nox & Katerina",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "license": "MIT",
   "auto_update": false,
   "minimum_client_version": "1.12.0"

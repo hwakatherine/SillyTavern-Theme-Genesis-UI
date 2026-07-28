@@ -70,7 +70,7 @@ const SETTING_GROUPS = [
             { key: 'messageRadius', label: 'Message corner radius', type: 'range', min: 0, max: 60, step: 1, suffix: 'px' },
             { key: 'shadowIntensity', label: 'Shadow intensity', type: 'range', min: 0, max: 1, step: 0.01 },
             { key: 'textPanelOpacityBoost', label: 'Text readability boost', type: 'range', min: 0, max: 0.25, step: 0.01 },
-            { key: 'messageBackdropBlur', label: 'Message-only backdrop blur', type: 'range', min: 0, max: 18, step: 1, suffix: 'px' }
+            { key: 'messageBackdropBlur', label: 'Message true background blur', type: 'range', min: 0, max: 64, step: 1, suffix: 'px' }
         ]
     },
     {
@@ -190,7 +190,7 @@ function applySettings() {
     const messageRadius = clampNumber(settings.messageRadius, 0, 60);
     const shadowIntensity = clampNumber(settings.shadowIntensity, 0, 1);
     const textPanelOpacityBoost = clampNumber(settings.textPanelOpacityBoost, 0, 0.25);
-    const messageBackdropBlur = clampNumber(settings.messageBackdropBlur, 0, 18);
+    const messageBackdropBlur = clampNumber(settings.messageBackdropBlur, 0, 64);
     const userMessageOpacity = clampNumber(settings.userMessageOpacity, 0, 1);
     const userGlowStrength = clampNumber(settings.userGlowStrength, 0, 1);
     const botMessageOpacity = clampNumber(settings.botMessageOpacity, 0, 1);
@@ -448,7 +448,7 @@ function renderSettingsPanel() {
     header.innerHTML = `
         <div>
             <strong>Genesis UI</strong>
-            <small>VoidDrift-style floating avatars, no banners, v0.1.6</small>
+            <small>VoidDrift-style avatars, message-only true blur test, v0.1.7</small>
         </div>
     `;
 
@@ -488,7 +488,7 @@ function renderSettingsPanel() {
 
     const note = document.createElement('div');
     note.className = 'genesis-ui-settings-note';
-    note.textContent = 'Tip: Message blur is drawn on each message card only. If it is hard to notice, lower opacity/readability first; a fully opaque card cannot show what is blurred behind it.';
+    note.textContent = 'Tip: v0.1.7 tests real message-only blur by making the chat panel transparent while the slider is above 0. Start at 18–28px; keep opacity below 0.55 if you want to actually see blur.';
     panel.appendChild(note);
 
     target.appendChild(panel);
